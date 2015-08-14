@@ -57,7 +57,7 @@ $(function () {
         if (contentId) {
             var $modalLoader = $('<div id="modal-loader" class="hidden"></div>'),
                 modalHTML;
-            evo.$.body.append($modalLoader);
+            $body.append($modalLoader);
             $modalLoader.load(pageURL + ' #' + contentId, function () {
                 generateModalTemplate($modalLoader.html(), additionalClass);
                 $modalLoader.remove();
