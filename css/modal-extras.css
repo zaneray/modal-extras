@@ -1,0 +1,136 @@
+img {
+  max-width: 100%;
+}
+
+@-moz-keyframes loading {
+  0% {
+    -moz-transform: rotate(0deg);
+  }
+  100% {
+    -moz-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes loading {
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@keyframes loading {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+.modal {
+  white-space: nowrap;
+  font-size: 0;
+  text-align: center;
+}
+.modal:after {
+  content: '';
+  display: inline-block;
+  vertical-align: middle;
+  width: 1px;
+  margin-left: -1px;
+  height: 100%;
+}
+.modal-ajax .modal-body h1:first-child,
+.modal-ajax .modal-body h2:first-child,
+.modal-ajax .modal-body h3:first-child,
+.modal-ajax .modal-body h4:first-child {
+  margin-top: 0;
+}
+.modal-ajax .modal-body div {
+  width: auto !important;
+}
+.modal-ajax .modal-body table {
+  width: 100% !important;
+}
+.modal-ajax .modal-body img {
+  height: auto !important;
+}
+.modal-ajax .modal-body iframe {
+  max-width: 100%;
+}
+.modal-ajax .container {
+  width: auto !important;
+}
+.modal-image-wrapper .modal-dialog {
+  max-width: 90%;
+  width: auto;
+}
+.modal-image-wrapper .modal-content {
+  background: transparent;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -ms-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+.modal-loading .modal-dialog {
+  cursor: wait;
+  position: relative;
+}
+.modal-loading .modal-dialog:before {
+  content: '';
+  opacity: 0.8;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  background: #fff;
+  z-index: 119;
+}
+.modal-loading .modal-dialog:after {
+  content: '';
+  background-color: rgba(0, 0, 0, 0);
+  border-radius: 2em;
+  -webkit-animation: loading 0.8s infinite linear 300ms 0 ease;
+  -moz-animation: loading 0.8s infinite linear 300ms 0 ease;
+  -ms-animation: loading 0.8s infinite linear 300ms 0 ease;
+  display: block;
+  border: 5px solid #ffffff;
+  border-top: 5px solid rgba(0, 0, 0, 0);
+  border-left: 5px solid rgba(0, 0, 0, 0);
+  width: 2em;
+  height: 2em;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 120;
+  margin-top: -1em;
+  margin-left: -1em;
+}
+.modal-loading .modal-dialog:before {
+  display: none;
+}
+.no-cssvhunit .modal-image {
+  height: 650px;
+}
+.modal-image {
+  max-height: 90vh;
+}
+.modal-video .modal-dialog {
+  width: 90%;
+  max-width: 1280px;
+}
+.modal-video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%;
+  /*405/720*/
+}
+.modal-video-iframe {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}

@@ -1,0 +1,227 @@
+// Declaring variables
+@border-width: 1px;
+@red: #842210;
+@transition-base: all .3s ease-out;
+
+@z-index-1:   100;
+@content-hero-z-index:              @z-index-1;
+@mixin-loading-animation-after:     @content-hero-z-index + 20;
+
+.opacity(@opacity) {
+  opacity: @opacity;
+  // IE8 filter
+  @opacity-ie: (@opacity * 100);
+  filter: ~"alpha(opacity=@{opacity-ie})";
+}
+.animation (@name, @duration: 300ms, @delay: 0, @ease: ease) {
+	-webkit-animation: @name @duration @delay @ease;
+	-moz-animation:    @name @duration @delay @ease;
+	-ms-animation:     @name @duration @delay @ease;
+}
+
+.transition (@transition) {
+	-webkit-transition: @transition;  
+	-moz-transition:    @transition;
+	-ms-transition:     @transition; 
+	-o-transition:      @transition;  
+}
+
+img {
+  max-width: 100%;
+}
+
+//------loading animation----------------------
+
+@-moz-keyframes loading {
+    0% {
+        -moz-transform: rotate(0deg);
+    }
+
+    100% {
+        -moz-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes loading {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes loading {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+//loading animation
+.loading(@size: 2.5em, @border: 5px, @color: @color-gray-light, @opacity: .8) {
+    cursor: wait;
+    position: relative;
+
+    &:before {
+        content: '';
+        opacity: @opacity;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        background: #fff;
+        z-index: (@mixin-loading-animation-after - 1);
+    }
+
+    &:after {
+        content: '';
+        background-color: rgba(0,0,0,0);
+        border-radius: @size;
+        .animation(loading .8s infinite linear);
+        display: block;
+        border: @border solid @color;
+        border-top: @border solid rgba(0,0,0,0);
+        border-left: @border solid rgba(0,0,0,0);
+        width: @size;
+        height: @size;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: @mixin-loading-animation-after; //20
+        margin-top: ((@size/2)*-1);
+        margin-left: ((@size/2)*-1);
+    }
+}
+
+
+//-------modal formatting --------------
+
+
+//vertical center it. 
+.modal {
+    white-space: nowrap;
+    font-size: 0;
+    text-align: center;
+
+    &:after {
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+        width: 1px;
+        margin-left: -1px;
+        height: 100%;
+    }
+}
+
+.modal-dialog {
+    
+}
+
+
+
+//---------Modal Ajax-----------------------
+
+.modal-ajax {
+    .modal-dialog {
+        
+    }
+
+    .modal-body {
+        h1:first-child,
+        h2:first-child,
+        h3:first-child,
+        h4:first-child {
+            margin-top: 0;
+        }
+
+        div {
+            width: auto !important;
+        }
+
+        table {
+            width: 100% !important;
+        }
+
+        img {
+            height: auto !important;
+        }
+
+        iframe {
+            max-width: 100%;
+        }
+    }
+
+    .container {
+        width: auto !important;
+    }
+}
+
+
+//---------Modal Images-----------------------
+
+.modal-image-wrapper .modal-dialog {
+    max-width: 90%;
+    width: auto;
+}
+
+.modal-image-wrapper .modal-content {
+    background: transparent;
+    .transition(@transition-base);
+    .opacity(1);
+}
+
+.modal-loading {
+    .modal-dialog {
+        .loading(2em;5px;#fff;.8);
+
+        &:before {
+            display: none;
+        }
+
+        .modal-btn-close {
+            //.opacity(0);
+        }
+
+        .modal-content {
+            //.opacity(0);
+        }
+    }
+}
+
+//support for viewport height units.
+.no-cssvhunit .modal-image {
+    height: 650px;
+}
+
+.modal-image {
+    max-height: 90vh;
+}
+
+
+
+//----------Modal videos--------------
+.modal-video .modal-dialog {
+    width: 90%;
+    max-width: 1280px;
+}
+
+.modal-video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /*405/720*/
+}
+
+.modal-video-iframe {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
