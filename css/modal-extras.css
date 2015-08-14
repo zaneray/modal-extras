@@ -1,7 +1,6 @@
 img {
   max-width: 100%;
 }
-
 @-moz-keyframes loading {
   0% {
     -moz-transform: rotate(0deg);
@@ -110,6 +109,14 @@ img {
 }
 .modal-loading .modal-dialog:before {
   display: none;
+}
+.modal-loading .modal-dialog .modal-btn-close {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+.modal-loading .modal-dialog .modal-content {
+  opacity: 0;
+  filter: alpha(opacity=0);
 }
 .no-cssvhunit .modal-image {
   height: 650px;
