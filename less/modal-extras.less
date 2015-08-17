@@ -1,9 +1,11 @@
-// Declaring variables
-@transition-base: all .3s ease-out;
-@z-index-1:   100;
+//---------- Variables --------//
+@transition-base:                   all .3s ease-out;
+@z-index-1:                         100;
 @content-hero-z-index:              @z-index-1;
 @mixin-loading-animation-after:     @content-hero-z-index + 20;
+@margin-base:                       25px;
 
+//--------- Mixins ---------//
 .opacity(@opacity) {
   opacity: @opacity;
   // IE8 filter
@@ -22,12 +24,7 @@
 	-ms-transition:     @transition; 
 	-o-transition:      @transition;  
 }
-
-img {
-  max-width: 100%;
-}
-
-//------loading animation----------------------
+//------ loading animation
 
 @-moz-keyframes loading {
     0% {
@@ -59,7 +56,6 @@ img {
     }
 }
 
-//loading animation
 .loading(@size: 2.5em, @border: 5px, @color: @color-gray-light, @opacity: .8) {
     cursor: wait;
     position: relative;
@@ -96,11 +92,35 @@ img {
     }
 }
 
+//------ common CSS
+img {
+  max-width: 100%;
+}
 
-//-------modal formatting --------------
+//---------- modal styles ----------//
+.modal-content {
+    border-radius: 0;
+}
 
+.modal-content:after {
+    content: " ";
+    display: table;
+    clear: both;
+}
 
-//vertical center it. 
+.modal-body {
+    .clearfix();
+    padding: 0 @margin-base @margin-base;
+    white-space: normal;
+}
+
+@media (min-width: @screen-xs-min) {
+    .modal-form {
+        padding-left: 15%;
+        padding-right: 15%;
+    }
+}
+
 .modal {
     white-space: nowrap;
     font-size: 0;
@@ -117,19 +137,63 @@ img {
 }
 
 .modal-dialog {
-    
+    font-size: @font-size-base;
+    margin: 13px;
+    text-align: left;
+    display: inline-block;
+    vertical-align: middle;
+    white-space: normal;
+    max-width: 90%;
 }
 
+@media (min-width:@screen-xs-min) {
+    .modal-dialog {
+        margin: 30px;
+    }
+}
 
+.modal-btn-close {
+    cursor: pointer;
+    position: absolute;
+    z-index: 300;
+    background: rgba(0,0,0,.9);
+    width: 28px;
+    height: 28px;
+    top: -13px;
+    right: -13px;
+    .opacity(1);
+    .transition(@transition-base);
 
-//---------Modal Ajax-----------------------
+    &:before,
+    &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 4px;
+        border-left: 2px solid #fff;
+        height: 20px;
+    }
 
+    &:before {
+        .rotate(45deg);
+        left: 13px;
+    }
+
+    &:after {
+        .rotate(-45deg);
+        right: 13px;
+    }
+}
+
+//------ Modal Ajax
 .modal-ajax {
     .modal-dialog {
-        
+        width: 760px;
     }
 
     .modal-body {
+        overflow: auto;
+
         h1:first-child,
         h2:first-child,
         h3:first-child,
@@ -139,10 +203,6 @@ img {
 
         div {
             width: auto !important;
-        }
-
-        table {
-            width: 100% !important;
         }
 
         img {
@@ -159,9 +219,7 @@ img {
     }
 }
 
-
-//---------Modal Images-----------------------
-
+//------ Modal Images
 .modal-image-wrapper .modal-dialog {
     max-width: 90%;
     width: auto;
@@ -190,8 +248,7 @@ img {
         }
     }
 }
-
-//support for viewport height units.
+// support for viewport height units: dependency Modernzr
 .no-cssvhunit .modal-image {
     height: 650px;
 }
@@ -200,9 +257,18 @@ img {
     max-height: 90vh;
 }
 
+.modal-header {
+    padding-bottom: 0;
+    margin-bottom: 0;
+    text-align: center;
+}
 
+.modal-title {
+    margin-bottom: 10px;
+    color: #000;
+}
 
-//----------Modal videos--------------
+//------ Modal videos
 .modal-video .modal-dialog {
     width: 90%;
     max-width: 1280px;
@@ -221,4 +287,3 @@ img {
     height: 100%;
     width: 100%;
 }
-
