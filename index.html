@@ -1,61 +1,65 @@
 <!DOCTYPE HTML>
 <html>
-   <head>
-        <title>modal extras</title>      
-        <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="css/modal-extras.css"> 
-        <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-        <script src="js/modal-extras.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-	</head>
-	<body>
-    <div class="container">
-    
+<head>
+  <title>modal extras</title>  
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">    
+  <link rel="stylesheet" type="text/css" href="css/modal-extras.css">
+  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+  <script src="js/modal-extras.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+<body>
+  <div class="container">
+
     <h1>Modal Windows</h1>
-    
-    <div id="modal-code">
+      <p>Dependencies <a href="http://getbootstrap.com/javascript/#modals" target="_blank">Bootstrap modal.less, modal.js,</a> <a href="https://jquery.com/">jQuery,</a> <a href="http://modernizr.com/">Modernzr</a></p>
       <p><a href="#" class="btn btn-large btn-primary" data-toggle="modal" data-target="#my-modal">Open inline Modal Window</a></p>
       <p><a href="#" id="my-btn" class="btn btn-large btn-primary" data-toggle="modal-html" data-id="id-1234">Open HTML modal by ID</a></p>
-      <p><a href="http://static.evo.com/content/promo/2015-5-20-ronix_coop-hp_hero-3.jpg" class="btn btn-large btn-primary" data-toggle="modal-image">Open horizontal Image Modal </a></p>
-      <p><a href="http://images.evo.com/imgp/1500/77094/372495/clone.jpg" class="btn btn-large btn-primary" data-toggle="modal-image">Open vertical Image Modal Window</a></p>
-      <p><a href="http://static.evo.com/content/promo/2015-1-23_generic_sale_shoes5.jpg" class="btn btn-large btn-primary" data-toggle="modal-image">Open small Image Modal Window</a></p>
+      <p><a href="http://www.zaneray.com/proto/images/flatheadsunset.jpg" class="btn btn-large btn-primary" data-toggle="modal-image">Open horizontal Image Modal </a></p>
+      <p><a href="http://www.zaneray.com/proto/images/fireotm.jpg" class="btn btn-large btn-primary" data-toggle="modal-image">Open vertical Image Modal Window</a></p>
+      <p><a href="http://www.zaneray.com/proto/images/two-med.jpg" class="btn btn-large btn-primary" data-toggle="modal-image">Open small Image Modal Window</a></p>
 
       <p><a href="https://vimeo.com/74980365" class="btn btn-large btn-primary" data-key="74980365" data-source="Vimeo" data-toggle="modal-video">Open Vimeo Video</a></p>
       <p><a href="https://www.youtube.com/watch?v=YZKZuWELJ2I" class="btn btn-large btn-primary" data-key="YZKZuWELJ2I" data-source="youtube" data-toggle="modal-video">Open Youtube Video</a></p>
+      <p><a href="http://www.zaneray.com" class="btn btn-large btn-primary" data-toggle="modal-ajax">Open Ajax Modal</a></p>
 
       <!-- Example of Content HTML modal window -->
-      <div id="id-1234" class="modal-html-insert">
+      <div class="hidden">
+        <div id="id-1234" class="modal-html-insert">
           <div class="modal-header">
-              <h3 class="modal-title">Title HTML</h3>
+            <h3 class="modal-title">Ski Quotes</h3>
           </div>
           <div class="modal-body">
             <p>
-              "You put on your boots, click into your bindings, dust the snow off your skis, and head out for the chair, and it doesn't matter that you failed a test, didn't get the girl, or that your life is on a one way trip down the sh***r, your world is right for the next couple hours."  Glen Plake
+            <img src="http://blog.thenewstribune.com/adventure/files/2013/01/plake2-263x400.jpg" style="float:left; margin-right: 20px; max-width: 150px;">
+              "You put on your boots, click into your bindings, dust the snow off your skis, and head out for the chair, and it doesn't matter that you failed a test, didn't get the girl, or that your life is on a one way trip down the sh***r, your world is right for the next couple hours." <strong>Glen Plake</strong>
             </p>
           </div>
+        </div>
       </div>
 
       <!-- Example of an inline modal window -->
       <div id="my-modal" class="modal fade" aria-hidden="true" style="display: none;">
-          <div class="modal-dialog">
-              <div class="modal-btn-close btn-close" data-dismiss="modal"></div>
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h3 class="modal-title">Modal title</h3>
-                  </div>
-                  <div class="modal-body">
-                      <p>One fine body…</p>
-                  </div>
-                  <div class="modal-footer">
-                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Save changes</button>
-                  </div>
-              </div><!-- /.modal-content -->
-          </div><!-- /.modal-dialog -->
+        <div class="modal-dialog">
+          <div class="modal-btn-close btn-close" data-dismiss="modal"></div>
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title">Modal title</h3>
+            </div>
+            <div class="modal-body">
+              <p>One fine body</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
-      </div>
-      </div>
-    
-    </body>
-    
+
+ 
+  </div>
+
+</body>
+
 </html>
