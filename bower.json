@@ -1,5 +1,5 @@
 {
-  "name": "bootstrap-modal-extras",
+  "name": "modal-extras",
   "version": "v1.0.0",
   "dependencies": {
       "jquery": ">=1.10.2"
