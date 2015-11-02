@@ -1,9 +1,9 @@
 {
   "name": "modal-extras",
-  "version": "v1.0.2",
+  "version": "v1.0.3",
   "dependencies": {
       "jquery": ">=1.10.2"
-  }
+  },
   "keywords": [
     "bootstrap",
     "modal"
