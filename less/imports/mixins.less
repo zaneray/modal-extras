@@ -1,0 +1,37 @@
+//custom modal extras mixins
+
+.loading(@size: 2.5em, @border: 3px, @color: @color-gray-light, @opacity: .8) {
+    cursor: wait;
+    position: relative;
+
+    &:before {
+        content: '';
+        opacity: @opacity;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        position: absolute;
+        background: #fff;
+        z-index: (@mixin-loading-animation-after - 1);
+    }
+
+    &:after {
+        content: '';
+        background-color: rgba(0,0,0,0);
+        border-radius: @size;
+        .animation(loading .8s infinite linear);
+        display: block;
+        border: @border solid @color;
+        border-top: @border solid rgba(0,0,0,0);
+        border-left: @border solid rgba(0,0,0,0);
+        width: @size;
+        height: @size;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        z-index: @mixin-loading-animation-after; //20
+        margin-top: ((@size/2)*-1);
+        margin-left: ((@size/2)*-1);
+    }
+}

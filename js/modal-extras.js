@@ -1,18 +1,18 @@
 $(function () {
-  
+
     var $body = $('body'); 
-  
+
     /*
     generateModalTemplate() writes the base html for the modal window
     note if you want the fade in effect add the 'fade' class in for class name
     */
     var generateModalTemplate = function (html, className) {
-        var $dynamicModal = $('<div id="dynamic-modal" class="modal">\
+        var $dynamicModal = $('<div id="dynamic-modal" class="modal fade">\
             <div class="modal-dialog">\
-                 <div class="modal-btn-close btn-close" data-dismiss="modal"></div>\
-                 <div class="modal-content"></div>\
+            <div class="modal-btn-close btn-close" data-dismiss="modal"></div>\
+            <div id="modal-content" class="modal-content"></div>\
             </div>\
-         </div>');
+            </div>');
 
         if (html) {
             $dynamicModal.find('.modal-content').html(html);
@@ -30,15 +30,50 @@ $(function () {
         })
     };
 
+
+    var removeModal = function(){
+        var $dynamicModal = $('#dynamic-modal'),
+        $modalBackdrop =   $('.modal-backdrop'),
+        delayAmount   =          0;
+        
+
+        if($dynamicModal.length < 1) {
+            return false;
+        }
+
+        if($dynamicModal.hasClass('fade')) {
+            $dynamicModal.removeClass('in').addClass('out');
+            $modalBackdrop.removeClass('in').addClass('out');
+            delayAmount = 350;
+        }
+
+
+        setTimeout(function(){
+            $dynamicModal.remove();
+            $modalBackdrop.remove();
+        },delayAmount);
+        
+    };
+
+
+    //remove the modal window on key up for the escape key
+    $body.on('keyup',function(e) {
+        if(e.keyCode === 27) {
+            console.log('got here');
+            removeModal();
+        }
+
+    });
+
     
 
     //load html to the modal window for data-toggle=modal-html
     $('[data-toggle=modal-html]').on('click', function (e) {
         e.preventDefault();
         var $this = $(this),
-            contentId = $this.data('id'),
-            additionalClass = $this.data('class') || '',
-            html = $('#' + contentId).clone();
+        contentId = $this.data('id'),
+        additionalClass = $this.data('class') || '',
+        html = $('#' + contentId).clone();
 
         generateModalTemplate(html, additionalClass);
     });
@@ -50,34 +85,40 @@ $(function () {
     $('[data-toggle=modal-ajax]').on('click', function (e) {
         e.preventDefault();
         var $this = $(this),
-            pageURL = $this.attr('href'),
-            additionalClass = $this.data('class') || '',
-            contentId = $this.data('id');
+        pageURL = $this.attr('href'),
+        additionalClass = $this.data('class') || '',
+        contentId = $this.data('id');
 
-        if (contentId) {
-            var $modalLoader = $('<div id="modal-loader" class="hidden"></div>'),
-                modalHTML;
-            $body.append($modalLoader);
-            $modalLoader.load(pageURL + ' #' + contentId, function () {
-                generateModalTemplate($modalLoader.html(), additionalClass);
-                $modalLoader.remove();
-            });
+        if(contentId !== undefined) {
+            pageURL = pageURL + ' #' + contentId;
         }
-        else {
-            $.get(pageURL).done(function (html) {
-                generateModalTemplate(html, additionalClass);
-            });
-        }
+
+
+        generateModalTemplate('', 'modal-ajax modal-loading ' + additionalClass);    
+
+        var $modalContent = $('#modal-content')
+
+        
+        $modalContent.load(pageURL, function (response, status, xhr) {
+            $('#dynamic-modal').removeClass('modal-loading');
+            if ( status == "error" ) {
+                alert('there was an error loading the URL');
+                removeModal();
+
+            }
+
+        });
+        
     });
 
     //load an image to the modal window for data-toggle=modal-image
     $('[data-toggle=modal-image]').on('click', function (e) {
         e.preventDefault();
         var $this = $(this),
-            imgSrc = $this.attr('href'),
-            imgTitle = $this.attr('title') || '',
-            additionalClass = $this.data('class') || '',
-            imgHTML = $('<img class="modal-image" id="modal-image" />').attr({ src: imgSrc, alt: imgTitle });
+        imgSrc = $this.attr('href'),
+        imgTitle = $this.attr('title') || '',
+        additionalClass = $this.data('class') || '',
+        imgHTML = $('<img class="modal-image" id="modal-image" />').attr({ src: imgSrc, alt: imgTitle });
 
         imgHTML.load(function () {
             $('#dynamic-modal').removeClass('modal-loading');
@@ -90,25 +131,25 @@ $(function () {
     $('[data-toggle=modal-video]').on('click', function (e) {
         e.preventDefault();
         var $this = $(this),
-            videoSource = $this.data('source'),
-            videoKey = $this.data('key'),
-            additionalClass = $this.data('class') || '',
-            videoHTML, embedURL;
+        videoSource = $this.data('source'),
+        videoKey = $this.data('key'),
+        additionalClass = $this.data('class') || '',
+        videoHTML, embedURL;
 
         switch (videoSource.toLowerCase()) {
             case 'vimeo':
-                embedURL = 'https://player.vimeo.com/video/' + videoKey + '?autoplay=1&title=0&byline=0&portrait=0';
-                break;
+            embedURL = 'https://player.vimeo.com/video/' + videoKey + '?autoplay=1&title=0&byline=0&portrait=0';
+            break;
             case 'youtube':
-                embedURL = 'https://www.youtube.com/embed/' + videoKey + '?rel=0&amp;showinfo=0&autoplay=1';
-                break;
+            embedURL = 'https://www.youtube.com/embed/' + videoKey + '?rel=0&amp;showinfo=0&autoplay=1';
+            break;
             default:
-                alert("The video source " + videoSource + " is not valid");
+            alert("The video source " + videoSource + " is not valid");
         }
 
         videoHTML = '<div class="modal-video-wrapper">\
-                        <iframe src="' + embedURL + '" class="modal-video-iframe" width="720" height="405" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>\
-                    </div>';
+        <iframe src="' + embedURL + '" class="modal-video-iframe" width="720" height="405" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>\
+        </div>';
 
         generateModalTemplate(videoHTML, 'modal-video ' + additionalClass);
     });
