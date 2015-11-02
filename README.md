@@ -8,6 +8,10 @@ This script extends the standard Boostrap modal to support things like ajax load
 ## Included Files
 Included you will find a demo index.html with examples you will also find the compiled CSS file as well as less files that build the compiled file. 
 
+### Compiling the CSS 
+Make sure you have less installed globally `npm install less -g`. Then navigate to the directory command line and run a `lessc modal-extras.less ../css/modal-extras.css` to compile a new CSS file. 
+
+
 ## Modal HTML
     <a href="#" data-toggle="modal-html" data-id="id-1234">Open HTML modal by ID</a>
 Specify a `data-toggle` attribute of `modal-html` and the link will grab HTML from somewhere on the page. Typically in a hidden div. 
