@@ -1,6 +1,6 @@
 {
   "name": "modal-extras",
-  "version": "v1.0.3",
+  "version": "v1.0.5",
   "dependencies": {
       "jquery": ">=1.10.2"
   },
