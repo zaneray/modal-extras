@@ -31,41 +31,15 @@ $(function () {
     };
 
 
-    var removeModal = function(){
-        var $dynamicModal = $('#dynamic-modal'),
-        $modalBackdrop =   $('.modal-backdrop'),
-        delayAmount   =          0;
-        
-
-        if($dynamicModal.length < 1) {
-            return false;
-        }
-
-        if($dynamicModal.hasClass('fade')) {
-            $dynamicModal.removeClass('in').addClass('out');
-            $modalBackdrop.removeClass('in').addClass('out');
-            delayAmount = 350;
-        }
-
-
-        setTimeout(function(){
-            $dynamicModal.remove();
-            $modalBackdrop.remove();
-        },delayAmount);
-        
-    };
-
-
     //remove the modal window on key up for the escape key
     $body.on('keyup',function(e) {
         if(e.keyCode === 27) {
-            console.log('got here');
-            removeModal();
+            console.log('ho yo');
+            $('.modal-btn-close').trigger('click');
         }
 
     });
 
-    
 
     //load html to the modal window for data-toggle=modal-html
     $('[data-toggle=modal-html]').on('click', function (e) {
