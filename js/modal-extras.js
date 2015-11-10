@@ -34,7 +34,6 @@ $(function () {
     //remove the modal window on key up for the escape key
     $body.on('keyup',function(e) {
         if(e.keyCode === 27) {
-            console.log('ho yo');
             $('.modal-btn-close').trigger('click');
         }
 
