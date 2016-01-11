@@ -98,6 +98,20 @@ $(function () {
         });
 
         generateModalTemplate(imgHTML, 'modal-image-wrapper modal-loading ' + additionalClass);
+
+        //Check if there is an image caption or image link, and update the imgHTML appropriately
+        if($this.attr('data-caption')){
+            var caption = $this.attr('data-caption'),
+                captionHTML = "<div class='modal-image-caption-wrapper'><span class='modal-image-caption'>" + caption + "</span></div>";
+
+            $('.modal-content').append(captionHTML);
+        }
+        if($(this).attr('data-link')){
+            var link = $this.attr('data-link'),
+                linkHTML = "<a href='" + link + "' target='_blank'></a>";
+
+            imgHTML.wrap(linkHTML);
+        }
     });
 
     //load an video to the modal window for data-toggle=modal-video
