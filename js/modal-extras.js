@@ -99,16 +99,31 @@ $(function () {
 
         generateModalTemplate(imgHTML, 'modal-image-wrapper modal-loading ' + additionalClass);
 
+        //check if the data-media-type is set to instagram, and append content accordingly
+        if($this.attr('data-instagram')){
+            var userphoto     = $this.attr('data-userphoto'),
+                username      = $this.attr('data-username'),
+                imageLocation = $this.attr('data-location'),
+                imageLikes    = $this.attr('data-likes'),
+                imageCaption  = $this.attr('data-caption'),
+                imageLink     = $this.attr('data-link');
+
+            instagramDataHTML = "<div class='modal-image-instagram-container'><div class='user-section'><img src='" + userphoto + "' class='instagram-userphoto' /><div class='user-info'><span class='username'>" + username + "</span><span class='location'>" + imageLocation + "</span></div><a href=" + imageLink + " class='btn btn-sm btn-instagram' target='_blank'>Follow</a></div><span class='image-likes'>" + imageLikes + "</span><span class='image-caption'>" + imageCaption + "</span></div>";
+
+            $('.modal-content').append(instagramDataHTML);
+
+        }
         //Check if there is an image caption or image link, and update the imgHTML appropriately
-        if($this.attr('data-caption')){
+        else if($this.attr('data-caption')){
             var caption = $this.attr('data-caption'),
                 captionHTML = "<div class='modal-image-caption-wrapper'><span class='modal-image-caption'>" + caption + "</span></div>";
 
             $('.modal-content').append(captionHTML);
         }
+        
         if($(this).attr('data-link')){
             var link = $this.attr('data-link'),
-                linkHTML = "<a href='" + link + "' target='_blank'></a>";
+                linkHTML = "<a href='" + link + "' class='modal-image-link' target='_blank'></a>";
 
             imgHTML.wrap(linkHTML);
         }
