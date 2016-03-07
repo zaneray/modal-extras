@@ -6,7 +6,7 @@ $(function () {
     generateModalTemplate() writes the base html for the modal window
     note if you want the fade in effect add the 'fade' class in for class name
     */
-    var generateModalTemplate = function (html, className) {
+    window.generateModalTemplate = function (html, className) {
         var $dynamicModal = $('<div id="dynamic-modal" class="modal fade">\
             <div class="modal-dialog">\
             <div class="modal-btn-close btn-close" data-dismiss="modal"></div>\
