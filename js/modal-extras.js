@@ -156,14 +156,13 @@ $(function () {
             //Append the gallery arrows to the dynamic-modal container
             $('#dynamic-modal').append("<span class='global-arrow prev-arrow'></span><span class='global-arrow next-arrow'></span>");
 
-            //Bind click event to arrows to cycle through image gallery array
-            $('#dynamic-modal .global-arrow').on('click', function(){
-                var $thisArrow = $(this),
-                    $modalImage = $('.modal-image'),
+            //define function to change gallery image
+            var goToNextImage = function(direction){
+                var $modalImage = $('.modal-image'),
                     currentImageSrc = $modalImage.attr('src'),
                     currentImageIndex = galleryImageArray.indexOf(currentImageSrc);
 
-                if($thisArrow.hasClass('next-arrow')){
+                if(direction == 'next'){
                     var nextImageIndex = currentImageIndex + 1;
 
                     if(nextImageIndex > galleryElementCount){
@@ -217,7 +216,25 @@ $(function () {
                 }
 
                 $modalImage.attr('src', nextImageSrc);
+            };
+
+            //Bind click event to arrows to cycle through image gallery array
+            $('#dynamic-modal .next-arrow').on('click', function(){
+                goToNextImage('next');
             });
+            $('#dynamic-modal .prev-arrow').on('click', function(){
+                goToNextImage('prev');
+            });
+
+            
+            //NEED TO FINISH TOUCH/SWIPE EVENT HERE
+            //Bind Swipe event
+            // $('.modal-content').on('swipeleft', function(){
+            //     goToNextImage('next');
+            // });
+            // $('.modal-content').on('swiperight', function(){
+            //     goToNextImage('prev');
+            // });
         }
     });
 
