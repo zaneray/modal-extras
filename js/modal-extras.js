@@ -127,6 +127,98 @@ $(function () {
 
             imgHTML.wrap(linkHTML);
         }
+
+        //Check if the modal-gallery option has been set, and setup the gallery with all appropriate images
+        if($(this).attr('data-gallery')){
+            var galleryName = $this.attr('data-gallery'),
+                $galleryElements = $('[data-gallery=' + galleryName + ']'),
+                galleryElementCount = $galleryElements.length - 1,
+                galleryImageArray = [],
+                galleryCaptionArray = [],
+                galleryLinkArray = [],
+                currentImageLink = $this.attr('href');
+
+            //Build an array of all images in the gallery
+            $galleryElements.each(function(){
+                var $thisImage = $(this);
+                imageLink = $thisImage.attr('href'),
+                imageCaption = $thisImage.attr('data-caption'),
+                imageLinkURL = $thisImage.attr('data-link');
+
+                galleryImageArray.push(imageLink);
+                galleryCaptionArray.push(imageCaption);
+                galleryLinkArray.push(imageLinkURL);
+            });
+
+            //Determine which spot you are in the gallery array
+            galleryImageNumber = galleryImageArray.indexOf(currentImageLink);
+
+            //Append the gallery arrows to the dynamic-modal container
+            $('#dynamic-modal').append("<span class='global-arrow prev-arrow'></span><span class='global-arrow next-arrow'></span>");
+
+            //Bind click event to arrows to cycle through image gallery array
+            $('#dynamic-modal .global-arrow').on('click', function(){
+                var $thisArrow = $(this),
+                    $modalImage = $('.modal-image'),
+                    currentImageSrc = $modalImage.attr('src'),
+                    currentImageIndex = galleryImageArray.indexOf(currentImageSrc);
+
+                if($thisArrow.hasClass('next-arrow')){
+                    var nextImageIndex = currentImageIndex + 1;
+
+                    if(nextImageIndex > galleryElementCount){
+                        nextImageIndex = 0;
+                    }
+                }
+                else{
+                    var nextImageIndex = currentImageIndex - 1;
+
+                    if(nextImageIndex < 0){
+                        nextImageIndex = galleryElementCount;
+                    }
+                }
+
+                var nextImageSrc = galleryImageArray[nextImageIndex],
+                    nextImageCaption = galleryCaptionArray[nextImageIndex],
+                    nextImageLink = galleryLinkArray[nextImageIndex];
+
+                //check if next image has caption and/or link, and switch content accordingly
+                if(nextImageCaption != undefined){
+                    if($('.modal-image-caption-wrapper').length > 0){
+                        $('.modal-image-caption').text(nextImageCaption);
+                    }
+                    else{
+                        var captionHTML = "<div class='modal-image-caption-wrapper'><span class='modal-image-caption'>" + nextImageCaption + "</span></div>";
+                        $('.modal-content').append(captionHTML);
+                    }
+                }
+                else{
+                    if($('.modal-image-caption-wrapper').length > 0){
+                        $('.modal-image-caption-wrapper').remove();
+                    }
+                }
+
+                if(nextImageLink != undefined){
+                    if($('.modal-image-link').length > 0){
+                        $('.modal-image-link').attr('src', nextImageLink);
+                    }
+                    else{
+                        var linkHTML = "<a href='" + nextImageLink + "' class='modal-image-link' target='_blank'></a>";
+
+                        $('.modal-image').wrap(linkHTML);
+                    }
+                }
+                else{
+                    if($('.modal-image-link').length > 0){
+                        var $modalImgHTML = $('.modal-image-link').contents();
+
+                        $('.modal-image-link').replaceWith($modalImgHTML);
+                    }
+                }
+
+                $modalImage.attr('src', nextImageSrc);
+            });
+        }
     });
 
     //load an video to the modal window for data-toggle=modal-video

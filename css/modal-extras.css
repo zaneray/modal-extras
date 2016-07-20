@@ -324,6 +324,30 @@
   font-weight: bold;
 }
 
+//global arrow styles
+.prev-arrow{
+  left: 0;
+  right: auto;
+}
+.next-arrow{
+  left: auto;
+  right: 0;
+}
+.global-arrow{
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  display: block;
+  border-radius: 50%;
+  background-color: #000;
+  top: 50%;
+  margin-top: -25px;
+}
+.global-arrow:hover{
+  cursor: pointer;
+}
+
+
 
 
 
