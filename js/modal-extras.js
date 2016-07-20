@@ -200,7 +200,7 @@ $(function () {
 
                 if(nextImageLink != undefined){
                     if($('.modal-image-link').length > 0){
-                        $('.modal-image-link').attr('src', nextImageLink);
+                        $('.modal-image-link').attr('href', nextImageLink);
                     }
                     else{
                         var linkHTML = "<a href='" + nextImageLink + "' class='modal-image-link' target='_blank'></a>";
