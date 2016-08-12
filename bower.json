@@ -2,7 +2,8 @@
   "name": "modal-extras",
   "version": "v1.0.8",
   "dependencies": {
-      "jquery": ">=1.10.2"
+      "jquery": ">=1.10.2",
+      "jquery-touchswipe": "1.6.18"
   },
   "keywords": [
     "bootstrap",

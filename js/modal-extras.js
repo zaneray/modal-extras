@@ -227,14 +227,16 @@ $(function () {
             });
 
             
-            //NEED TO FINISH TOUCH/SWIPE EVENT HERE
             //Bind Swipe event
-            // $('.modal-content').on('swipeleft', function(){
-            //     goToNextImage('next');
-            // });
-            // $('.modal-content').on('swiperight', function(){
-            //     goToNextImage('prev');
-            // });
+            $('.modal-content').swipe({
+                swipeLeft:function(){
+                    goToNextImage('next');    
+                },
+                swipeRight:function(){
+                    goToNextImage('prev');
+                }
+            });
+            
         }
     });
 
