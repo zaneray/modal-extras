@@ -25,8 +25,8 @@ $(function () {
         $dynamicModal.prependTo($body).modal();
 
         //need to remove it on hide to keep videos from playing other classes from perpetuating etc.
-        $dynamicModal.on('hidden.bs.modal', function (e) {
-            $dynamicModal.remove();
+        $(document).on('hidden.bs.modal', "#dynamic-modal", function (e) {
+            $("#dynamic-modal").remove();
         })
     };
 
@@ -76,7 +76,7 @@ $(function () {
             $('#dynamic-modal').removeClass('modal-loading');
             if ( status == "error" ) {
                 alert('there was an error loading the URL');
-                removeModal();
+                $("#dynamic-modal").remove();
 
             }
 
