@@ -41,7 +41,7 @@ $(function () {
 
 
     //load html to the modal window for data-toggle=modal-html
-    $('[data-toggle=modal-html]').on('click', function (e) {
+    $body.on('click','[data-toggle=modal-html]', function (e) {
         e.preventDefault();
         var $this = $(this),
         contentId = $this.data('id'),
@@ -55,7 +55,7 @@ $(function () {
     /* Load content into modal via ajax
     Specifying data-id will just load the contents of a div on the AJAX request page otherwise the whole resulting HTML will load.
     */
-    $('[data-toggle=modal-ajax]').on('click', function (e) {
+    $body.on('click','[data-toggle=modal-ajax]', function (e) {
         e.preventDefault();
         var $this = $(this),
         pageURL = $this.attr('href'),
@@ -85,7 +85,7 @@ $(function () {
     });
 
     //load an image to the modal window for data-toggle=modal-image
-    $('[data-toggle=modal-image]').on('click', function (e) {
+    $body.on('click','[data-toggle=modal-image]', function (e) {
         e.preventDefault();
         var $this = $(this),
         imgSrc = $this.attr('href'),
@@ -219,10 +219,11 @@ $(function () {
             };
 
             //Bind click event to arrows to cycle through image gallery array
-            $('#dynamic-modal .next-arrow').on('click', function(){
+
+            $body.on('click','#dynamic-modal .next-arrow', function(){
                 goToNextImage('next');
             });
-            $('#dynamic-modal .prev-arrow').on('click', function(){
+            $body.on('click','#dynamic-modal .prev-arrow', function(){
                 goToNextImage('prev');
             });
 
@@ -241,7 +242,7 @@ $(function () {
     });
 
     //load an video to the modal window for data-toggle=modal-video
-    $('[data-toggle=modal-video]').on('click', function (e) {
+    $body.on('click','[data-toggle=modal-video]', function (e) {
         e.preventDefault();
         var $this = $(this),
         videoSource = $this.data('source'),
