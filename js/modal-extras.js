@@ -6,9 +6,15 @@ $(function () {
   note if you want the fade in effect add the 'fade' class in for class name
   */
   window.generateModalTemplate = function (html, className) {
-        var $dynamicModal = $('<div id="dynamic-modal" class="modal fade">\
-            <div class="modal-dialog">\
-            <div class="modal-btn-close btn-close" data-dismiss="modal"></div>\
+    var $dynamicModal = $('<div\
+                  id="dynamic-modal"\
+                  class="modal fade"\
+                  role="dialog"\
+                  aria-modal="true"\
+                  tabindex="-1"\
+                  style="display: none;">\
+            <div class="modal-dialog" role="document">\
+            <button class="modal-btn-close btn-close" data-dismiss="modal"></button>\
             <div id="modal-content" class="modal-content"></div>\
             </div>\
             </div>');
