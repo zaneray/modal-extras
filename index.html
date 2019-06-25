@@ -19,7 +19,7 @@
       <p><a href="http://www.zaneray.com/proto/images/flatheadsunset.jpg" class="btn btn-large btn-primary" data-toggle="modal-image">Open horizontal Image Modal </a></p>
       <p><a href="http://www.zaneray.com/proto/images/fireotm.jpg" class="btn btn-large btn-primary" data-toggle="modal-image">Open vertical Image Modal Window</a></p>
       <p><a href="http://www.zaneray.com/proto/images/two-med.jpg" class="btn btn-large btn-primary" data-toggle="modal-image">Open small Image Modal Window</a></p>
-      <p><a href="http://www.zaneray.com/proto/images/two-med.jpg" class="btn btn-large btn-primary" data-toggle="modal-image" data-caption="This caption image comes from the data-caption attribute.  The image is now linkable because the data-link attribute has been included." data-link="http://www.zaneray.com/">Open Image with caption Modal Window</a></p>
+      <p><a href="http://www.zaneray.com/proto/images/two-med.jpg" class="btn btn-large btn-primary" data-toggle="modal-image" data-caption="This caption image comes from the data-caption attribute. The image is now linkable because the data-link attribute has been included." data-link="http://www.zaneray.com/">Open Image with caption Modal Window</a></p>
       <p><a href="http://www.zaneray.com/proto/images/two-med.jpg" class="btn btn-large btn-primary"   
              data-toggle="modal-image" 
              data-instagram="true" 
@@ -47,17 +47,20 @@
           </div>
           <div class="modal-body">
             <p>
-            <img src="http://blog.thenewstribune.com/adventure/files/2013/01/plake2-263x400.jpg" style="float:left; margin-right: 20px; max-width: 150px;">
-              "You put on your boots, click into your bindings, dust the snow off your skis, and head out for the chair, and it doesn't matter that you failed a test, didn't get the girl, or that your life is on a one way trip down the sh***r, your world is right for the next couple hours." <strong>Glen Plake</strong>
+              "You put on your boots, click into your bindings, dust the snow off your skis, and head out for the chair, and it doesn't matter that you failed a test, didn't get the girl, or that your life is on a one way trip down the shower, your world is right for the next couple hours." <strong>Glen Plake</strong>
             </p>
           </div>
         </div>
       </div>
 
-      <!-- Example of an inline modal window -->
-      <div id="my-modal" class="modal fade" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog">
-          <div class="modal-btn-close btn-close" data-dismiss="modal"></div>
+      <div
+          id="exquisite-modal"
+          class="modal fade"
+          style="display: none;"
+          role="dialog"
+          tabindex="-1">
+
+        <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h3 class="modal-title">Modal title</h3>
@@ -69,11 +72,11 @@
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
               <button type="button" class="btn btn-primary">Save changes</button>
             </div>
+            <button class="modal-btn-close btn-close" data-dismiss="modal" aria-label="Close Modal"></button>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
       </div><!-- /.modal -->
 
- 
   </div>
 
 </body>

@@ -98,6 +98,7 @@
   -moz-transition: all 0.25s ease-out;
   -ms-transition: all 0.25s ease-out;
   -o-transition: all 0.25s ease-out;
+  border: none;
 }
 .modal-btn-close:before,
 .modal-btn-close:after {
@@ -163,17 +164,6 @@
   cursor: wait;
   position: relative;
 }
-.modal-loading .modal-dialog:before {
-  content: '';
-  opacity: 0.8;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  position: absolute;
-  background: #fff;
-  z-index: 500;
-}
 .modal-loading .modal-dialog:after {
   content: '';
   background-color: rgba(0, 0, 0, 0);
@@ -183,8 +173,8 @@
   animation: loading 0.8s infinite linear;
   display: block;
   border: 5px solid #fff;
-  border-top: 5px solid rgba(0, 0, 0, 0);
-  border-left: 5px solid rgba(0, 0, 0, 0);
+  border-top: 5px solid rgba(255, 255, 255, 0.3);
+  border-left: 5px solid rgba(255, 255, 255, 0.3);
   width: 2em;
   height: 2em;
   position: absolute;
@@ -221,15 +211,15 @@
   margin-bottom: 10px;
   color: #000;
 }
-.modal-image-caption-wrapper{
-    background-color: rgba(0,0,0,0.8);
-    padding: 15px;
-    width: 100%;
-    position: absolute;
+.modal-image-caption-wrapper {
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 15px;
+  width: 100%;
+  position: absolute;
 }
-.modal-image-caption{
-    color: #fff;
-    font-size: 18px;
+.modal-image-caption {
+  color: #fff;
+  font-size: 18px;
 }
 .modal-video .modal-dialog {
   width: 90%;
@@ -248,41 +238,45 @@
   height: 100%;
   width: 100%;
 }
-
-//Modal Instagram Data
-
-.modal-instagram{}
-.modal-instagram .modal-image-link{
-    float: left;
+.modal-instagram .modal-image-link {
+  float: left;
 }
-.modal-instagram .modal-image-instagram-container{
-    float: left;
-    background-color: #fff;
-    padding: 15px;
-    font-family: 'avenir';
-    font-size: 15px;
+.modal-instagram .modal-instagram .modal-image-instagram-container {
+  float: left;
+  background-color: #fff;
+  padding: 15px;
+  font-family: 'avenir';
+  font-size: 15px;
 }
-.modal-instagram .modal-content{
+.modal-instagram .modal-content {
   background-color: #fff;
   border: none;
 }
-.modal-instagram .user-section{
-  .clearfix();
+.modal-instagram .user-section {
   padding: 5px 0 20px 0;
   border-bottom: 1px solid #eeefef;
 }
-.modal-instagram .instagram-userphoto{
+.modal-instagram .user-section:before,
+.modal-instagram .user-section:after {
+  content: " ";
+  display: table;
+}
+.modal-instagram .user-section:after {
+  clear: both;
+}
+.modal-instagram .instagram-userphoto {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   float: left;
   margin-right: 10px;
 }
-.modal-instagram .user-info{
+.modal-instagram .user-info {
   float: left;
   max-width: 115px;
 }
-.modal-instagram .username, .modal-instagram .location{
+.modal-instagram .username,
+.modal-instagram .location {
   display: block;
   color: #125688;
   font-size: 15px;
@@ -293,12 +287,12 @@
   overflow: hidden;
   white-space: nowrap;
 }
-.modal-instagram .location{
+.modal-instagram .location {
   color: #4090db;
   font-size: 13px;
   padding-top: 3px;
 }
-.modal-instagram .btn-instagram{
+.modal-instagram .btn-instagram {
   margin-left: 20px;
   padding: 0 11px;
   margin-top: 4px;
@@ -316,24 +310,22 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-.modal-instagram .image-likes{
+.modal-instagram .image-likes {
   color: #4b4f54;
   padding: 20px 0;
   display: block;
   font-size: 15px;
   font-weight: bold;
 }
-
-//global arrow styles
-.prev-arrow{
+.prev-arrow {
   left: 0;
   right: auto;
 }
-.next-arrow{
+.next-arrow {
   left: auto;
   right: 0;
 }
-.global-arrow{
+.global-arrow {
   position: absolute;
   height: 50px;
   width: 50px;
@@ -343,27 +335,6 @@
   top: 50%;
   margin-top: -25px;
 }
-.global-arrow:hover{
+.global-arrow:hover {
   cursor: pointer;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

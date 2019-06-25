@@ -1,5 +1,15 @@
 $(function () {
   var $body = $('body');
+  var   $modalTrigger,
+        $target,
+        href,
+        html,
+        contentId,
+        additionalClass,
+        imgTitle,
+        imgHTML,
+        videoSrc,
+        videoKey;
 
   /*
   generateModalTemplate() writes the base html for the modal window
@@ -14,8 +24,8 @@ $(function () {
                   tabindex="-1"\
                   style="display: none;">\
             <div class="modal-dialog" role="document">\
-            <button class="modal-btn-close btn-close" data-dismiss="modal"></button>\
             <div id="modal-content" class="modal-content"></div>\
+            <button class="modal-btn-close btn-close" data-dismiss="modal" aria-label="Close Modal"></button>\
             </div>\
             </div>');
 
@@ -29,71 +39,73 @@ $(function () {
 
     $dynamicModal.prependTo($body).modal();
 
-    //need to remove it on hide to keep videos from playing other classes from perpetuating etc.
+    // Tie in to the modal close event in bootstrap JS
     $(document).on('hidden.bs.modal', "#dynamic-modal", function (e) {
+
+      // Remove modal HTML to keep videos from playing other classes from perpetuating etc.
       $("#dynamic-modal").remove();
+      $dynamicModal = '';
+
+      // Set focus back to triggering element for accessibility
+      $modalTrigger.focus();
     })
   };
 
-
-  //remove the modal window on key up for the escape key
+  // Escape key triggers closing the modal
   $body.on('keyup', function (e) {
     if (e.keyCode === 27) {
       $('.modal-btn-close').trigger('click');
     }
   });
 
-
-  //load html to the modal window for data-toggle=modal-html
+  // Load html to the modal window for data-toggle=modal-html
   $body.on('click', '[data-toggle=modal-html]', function (e) {
-    e.preventDefault();
-    var $this = $(this),
-      contentId = $this.data('id'),
-      additionalClass = $this.data('class') || '',
-      html = $('#' + contentId).clone();
+    $modalTrigger = $(this);
+    $target = $('#' + $modalTrigger.attr('data-id'));
+    href = $modalTrigger.attr('href');
+    contentId = $modalTrigger.data('id');
+    additionalClass = $modalTrigger.data('class') || '';
+    html = $('#' + contentId).clone();
 
+    e.preventDefault();
     generateModalTemplate(html, additionalClass);
   });
 
-
-  /* Load content into modal via ajax
-  Specifying data-id will just load the contents of a div on the AJAX request page otherwise the whole resulting HTML will load.
+  /*
+      Load content into a modal via ajax. Specifying data-id
+      will just load the contents of a div on the AJAX request
+      page. Otherwise the whole resulting HTML will load.
   */
   $body.on('click', '[data-toggle=modal-ajax]', function (e) {
     e.preventDefault();
-    var $this = $(this),
-      pageURL = $this.attr('href'),
-      additionalClass = $this.data('class') || '',
-      contentId = $this.data('id');
+
+    $modalTrigger = $(this);
+    href = $modalTrigger.attr('href');
+    additionalClass = $modalTrigger.data('class') || '';
+    contentId = $modalTrigger.data('id');
 
     if (contentId !== undefined) {
-      pageURL = pageURL + ' #' + contentId;
+      href = href + ' #' + contentId;
     }
 
-
     generateModalTemplate('', 'modal-ajax modal-loading ' + additionalClass);
-
-    var $modalContent = $('#modal-content')
-
-
-    $modalContent.load(pageURL, function (response, status, xhr) {
+    $('#modal-content').load(href, function (response, status, xhr) {
       $('#dynamic-modal').removeClass('modal-loading');
       if (status == "error") {
         alert('there was an error loading the URL');
         $("#dynamic-modal").remove();
-
       }
     });
   });
 
-  //load an image to the modal window for data-toggle=modal-image
+  // Load an image to the modal window for data-toggle="modal-image"
   $body.on('click', '[data-toggle=modal-image]', function (e) {
     e.preventDefault();
-    var $this = $(this),
-      imgSrc = $this.attr('href'),
-      imgTitle = $this.attr('title') || '',
-      additionalClass = $this.data('class') || '',
-      imgHTML = $('<img class="modal-image" id="modal-image" />').attr({src: imgSrc, alt: imgTitle});
+    $modalTrigger = $(this);
+    href = $modalTrigger.attr('href');
+    imgTitle = $modalTrigger.attr('title') || '';
+    additionalClass = $modalTrigger.data('class') || '';
+    imgHTML = $('<img class="modal-image" id="modal-image" />').attr({src: href, alt: imgTitle});
 
     imgHTML.load(function () {
       $('#dynamic-modal').removeClass('modal-loading');
@@ -101,51 +113,51 @@ $(function () {
 
     generateModalTemplate(imgHTML, 'modal-image-wrapper modal-loading ' + additionalClass);
 
-    //check if the data-media-type is set to instagram, and append content accordingly
-    if ($this.attr('data-instagram')) {
-      var userphoto = $this.attr('data-userphoto'),
-        username = $this.attr('data-username'),
-        imageLocation = $this.attr('data-location'),
-        imageLikes = $this.attr('data-likes'),
-        imageCaption = $this.attr('data-caption'),
-        imageLink = $this.attr('data-link');
+    //check if the data-media-type is set to instagram and append content accordingly
+    if ($modalTrigger.attr('data-instagram')) {
+      var userphoto = $modalTrigger.attr('data-userphoto'),
+        username = $modalTrigger.attr('data-username'),
+        imageLocation = $modalTrigger.attr('data-location'),
+        imageLikes = $modalTrigger.attr('data-likes'),
+        imageCaption = $modalTrigger.attr('data-caption'),
+        imageLink = $modalTrigger.attr('data-link');
 
       instagramDataHTML = "<div class='modal-image-instagram-container'><div class='user-section'><img src='" + userphoto + "' class='instagram-userphoto' /><div class='user-info'><span class='username'>" + username + "</span><span class='location'>" + imageLocation + "</span></div><a href=" + imageLink + " class='btn btn-sm btn-instagram' target='_blank'>Follow</a></div><span class='image-likes'>" + imageLikes + "</span><span class='image-caption'>" + imageCaption + "</span></div>";
 
-      $('.modal-content').append(instagramDataHTML);
+      $('#dynamic-modal').find('.modal-content').append(instagramDataHTML);
 
     }
     //Check if there is an image caption or image link, and update the imgHTML appropriately
-    else if ($this.attr('data-caption')) {
-      var caption = $this.attr('data-caption'),
+    else if ($modalTrigger.attr('data-caption')) {
+      var caption = $modalTrigger.attr('data-caption'),
         captionHTML = "<div class='modal-image-caption-wrapper'><span class='modal-image-caption'>" + caption + "</span></div>";
 
-      $('.modal-content').append(captionHTML);
+      $('#dynamic-modal').find('.modal-content').append(captionHTML);
     }
 
     if ($(this).attr('data-link')) {
-      var link = $this.attr('data-link'),
-        linkHTML = "<a href='" + link + "' class='modal-image-link' target='_blank'></a>";
+      var link = $(this).attr('data-link'),
+          linkHTML = "<a href='" + link + "' class='modal-image-link' target='_blank'></a>";
 
       imgHTML.wrap(linkHTML);
     }
 
-    //Check if the modal-gallery option has been set, and setup the gallery with all appropriate images
-    if ($(this).attr('data-gallery')) {
-      var galleryName = $this.attr('data-gallery'),
+    // Check if the modal-gallery option has been set, and setup the gallery with all appropriate images
+    if ($modalTrigger.attr('data-gallery')) {
+      var galleryName = $modalTrigger.attr('data-gallery'),
         $galleryElements = $('[data-gallery=' + galleryName + ']'),
         galleryElementCount = $galleryElements.length - 1,
         galleryImageArray = [],
         galleryCaptionArray = [],
         galleryLinkArray = [],
-        currentImageLink = $this.attr('href');
+        currentImageLink = $modalTrigger.attr('href');
 
-      //Build an array of all images in the gallery
+      // Build an array of all images in the gallery
       $galleryElements.each(function () {
-        var $thisImage = $(this);
-        imageLink = $thisImage.attr('href'),
-          imageCaption = $thisImage.attr('data-caption'),
-          imageLinkURL = $thisImage.attr('data-link');
+        var $thisImage = $(this),
+            imageLink = $thisImage.attr('href'),
+            imageCaption = $thisImage.attr('data-caption'),
+            imageLinkURL = $thisImage.attr('data-link');
 
         galleryImageArray.push(imageLink);
         galleryCaptionArray.push(imageCaption);
@@ -188,7 +200,7 @@ $(function () {
             $('.modal-image-caption').text(nextImageCaption);
           } else {
             var captionHTML = "<div class='modal-image-caption-wrapper'><span class='modal-image-caption'>" + nextImageCaption + "</span></div>";
-            $('.modal-content').append(captionHTML);
+            $('#dynamic-modal').find('.modal-content').append(captionHTML);
           }
         } else {
           if ($('.modal-image-caption-wrapper').length > 0) {
@@ -241,13 +253,14 @@ $(function () {
   //load an video to the modal window for data-toggle=modal-video
   $body.on('click', '[data-toggle=modal-video]', function (e) {
     e.preventDefault();
-    var $this = $(this),
-      videoSource = $this.data('source'),
-      videoKey = $this.data('key'),
-      additionalClass = $this.data('class') || '',
-      videoHTML, embedURL;
+    $modalTrigger = $(this);
+    videoSrc = $modalTrigger.data('source');
+    videoKey = $modalTrigger.data('key');
+    additionalClass = $modalTrigger.data('class') || '';
 
-    switch (videoSource.toLowerCase()) {
+    var videoHTML, embedURL;
+
+    switch (videoSrc.toLowerCase()) {
       case 'vimeo':
         embedURL = 'https://player.vimeo.com/video/' + videoKey + '?autoplay=1&title=0&byline=0&portrait=0';
         break;
@@ -255,7 +268,7 @@ $(function () {
         embedURL = 'https://www.youtube.com/embed/' + videoKey + '?rel=0&amp;showinfo=0&autoplay=1';
         break;
       default:
-        alert("The video source " + videoSource + " is not valid");
+        alert("The video source " + videoSrc + " is not valid");
     }
 
     videoHTML = '<div class="modal-video-wrapper">\
