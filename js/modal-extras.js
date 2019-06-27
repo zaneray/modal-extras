@@ -121,7 +121,6 @@ $(function () {
 
   // Load an image to the modal window for data-toggle="modal-image"
   $body.on('click', '[data-toggle=modal-image]', function (e) {
-    console.log('called modal-image');
     e.preventDefault();
     $modalTrigger = $(this);
     href = $modalTrigger.attr('href');
@@ -278,7 +277,6 @@ $(function () {
 
   //load an video to the modal window for data-toggle=modal-video
   $body.on('click', '[data-toggle=modal-video]', function (e) {
-    console.log('called modal-video');
     e.preventDefault();
     $modalTrigger = $(this);
     videoSrc = $modalTrigger.data('source');
