@@ -1,21 +1,22 @@
 $(function () {
-  var $body = $('body');
-  var   $modalTrigger,
-        $target,
-        href,
-        html,
-        contentId,
-        additionalClass,
-        imgTitle,
-        imgHTML,
-        videoSrc,
-        videoKey;
+  var   $body = $('body'),
+    $bodyInner,
+    $modalTrigger,
+    $target,
+    href,
+    html,
+    contentId,
+    additionalClass,
+    imgTitle,
+    imgHTML,
+    videoSrc,
+    videoKey;
 
   /*
   generateModalTemplate() writes the base html for the modal window
   note if you want the fade in effect add the 'fade' class in for class name
   */
-  window.generateModalTemplate = function (html, className) {
+  window.generateModalTemplate = function (html, className, bodyInner) {
     var $dynamicModal = $('<div\
                   id="dynamic-modal"\
                   class="modal fade"\
@@ -37,14 +38,27 @@ $(function () {
       $dynamicModal.addClass(className);
     }
 
+    // Prepend dynamic modal HTML to the body
     $dynamicModal.prependTo($body).modal();
+
+    // Hide everything except the modal from assistive technology
+    if( bodyInner != null) {
+      $bodyInner.attr('aria-hidden', 'true');
+    }
 
     // Tie in to the modal close event in bootstrap JS
     $(document).on('hidden.bs.modal', "#dynamic-modal", function (e) {
 
       // Remove modal HTML to keep videos from playing other classes from perpetuating etc.
       $("#dynamic-modal").remove();
+
+      // Remove contents from dynamic modal element
       $dynamicModal = '';
+
+      // Make the content visible to assistive technology again
+      if (bodyInner != null) {
+        $bodyInner.attr('aria-hidden', 'false');
+      }
 
       // Set focus back to triggering element for accessibility
       $modalTrigger.focus();
@@ -60,6 +74,7 @@ $(function () {
 
   // Load html to the modal window for data-toggle=modal-html
   $body.on('click', '[data-toggle=modal-html]', function (e) {
+    e.preventDefault();
     $modalTrigger = $(this);
     $target = $('#' + $modalTrigger.attr('data-id'));
     href = $modalTrigger.attr('href');
@@ -67,8 +82,11 @@ $(function () {
     additionalClass = $modalTrigger.data('class') || '';
     html = $('#' + contentId).clone();
 
-    e.preventDefault();
-    generateModalTemplate(html, additionalClass);
+    if ($modalTrigger.attr('data-hide')) {
+      $bodyInner = $('#' + $modalTrigger.data('hide'));
+    }
+
+    generateModalTemplate(html, additionalClass, $bodyInner);
   });
 
   /*
@@ -78,17 +96,20 @@ $(function () {
   */
   $body.on('click', '[data-toggle=modal-ajax]', function (e) {
     e.preventDefault();
-
     $modalTrigger = $(this);
     href = $modalTrigger.attr('href');
     additionalClass = $modalTrigger.data('class') || '';
     contentId = $modalTrigger.data('id');
 
+    if ($modalTrigger.attr('data-hide')) {
+      $bodyInner = $('#' + $modalTrigger.data('hide'));
+    }
+
     if (contentId !== undefined) {
       href = href + ' #' + contentId;
     }
 
-    generateModalTemplate('', 'modal-ajax modal-loading ' + additionalClass);
+    generateModalTemplate('', 'modal-ajax modal-loading ' + additionalClass, $bodyInner);
     $('#modal-content').load(href, function (response, status, xhr) {
       $('#dynamic-modal').removeClass('modal-loading');
       if (status == "error") {
@@ -100,6 +121,7 @@ $(function () {
 
   // Load an image to the modal window for data-toggle="modal-image"
   $body.on('click', '[data-toggle=modal-image]', function (e) {
+    console.log('called modal-image');
     e.preventDefault();
     $modalTrigger = $(this);
     href = $modalTrigger.attr('href');
@@ -111,7 +133,11 @@ $(function () {
       $('#dynamic-modal').removeClass('modal-loading');
     });
 
-    generateModalTemplate(imgHTML, 'modal-image-wrapper modal-loading ' + additionalClass);
+    if ($modalTrigger.attr('data-hide')) {
+      $bodyInner = $('#' + $modalTrigger.data('hide'));
+    }
+
+    generateModalTemplate(imgHTML, 'modal-image-wrapper modal-loading ' + additionalClass, $bodyInner);
 
     //check if the data-media-type is set to instagram and append content accordingly
     if ($modalTrigger.attr('data-instagram')) {
@@ -252,11 +278,16 @@ $(function () {
 
   //load an video to the modal window for data-toggle=modal-video
   $body.on('click', '[data-toggle=modal-video]', function (e) {
+    console.log('called modal-video');
     e.preventDefault();
     $modalTrigger = $(this);
     videoSrc = $modalTrigger.data('source');
     videoKey = $modalTrigger.data('key');
     additionalClass = $modalTrigger.data('class') || '';
+
+    if ($modalTrigger.attr('data-hide')) {
+      $bodyInner = $('#' + $modalTrigger.data('hide'));
+    }
 
     var videoHTML, embedURL;
 
@@ -275,6 +306,6 @@ $(function () {
         <iframe src="' + embedURL + '" class="modal-video-iframe" width="720" height="405" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>\
         </div>';
 
-    generateModalTemplate(videoHTML, 'modal-video ' + additionalClass);
+    generateModalTemplate(videoHTML, 'modal-video ' + additionalClass, $bodyInner);
   });
 });
