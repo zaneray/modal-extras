@@ -1,0 +1,9 @@
+{
+  "name": "modal-extras",
+  "description": "Accessible version of modal extras",
+  "version": "1.1.0",
+  "repository": {
+    "type": "git",
+    "url": "https://git@github.com:zaneray/modal-extras.git#accessibility"
+  }
+}
