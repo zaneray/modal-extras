@@ -61,7 +61,10 @@ $(function () {
       }
 
       // Set focus back to triggering element for accessibility
-      $modalTrigger.focus();
+      // TODO need to find a more elegant solution for resetting focus when there is no calling element.
+      if($modalTrigger) {
+        $modalTrigger.focus();
+      }
     })
   };
 
