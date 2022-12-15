@@ -297,7 +297,7 @@ $(function () {
         embedURL = 'https://player.vimeo.com/video/' + videoKey + '?autoplay=1&title=0&byline=0&portrait=0';
         break;
       case 'youtube':
-        embedURL = 'https://www.youtube.com/embed/' + videoKey + '?rel=0&amp;showinfo=0&autoplay=1';
+        embedURL = 'https://www.youtube.com/embed/' + videoKey + '?rel=0&amp;showinfo=0&autoplay=1&mute=1';
         break;
       default:
         alert("The video source " + videoSrc + " is not valid");
